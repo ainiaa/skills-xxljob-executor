@@ -12,10 +12,10 @@ Trigger a registered BEAN handler through the executor's HTTP API. The required 
 An explicit user request to execute is required; composing a command or explaining parameters does not authorize a run.
 
 ```bash
-python3 /Users/liuwenyuan/www/tools/skills-xxljob-executor/scripts/run_xxl_job.py \
-  --executor-url "http://10.93.1.143:9999" \
-  --handler "syncAegisTradeFlowHandler" \
-  --params '{"accountNos":["acct_x"],"startTime":1789344000000,"endTime":1789430400000}'
+python3 scripts/run_xxl_job.py \
+  --executor-url "https://executor.example.com" \
+  --handler "exampleHandler" \
+  --params '{"key":"value"}'
 ```
 
 The runner first calls `/beat`; if it is not successful it stops without calling `/run`. On success it triggers `/run` once using the standard direct-executor payload, then reads the current `/log` content for that generated log ID. It derives a stable positive job ID from the Handler unless the user gives a real `--job-id`. Do not automatically retry a run that fails or whose result is inconclusive.
@@ -23,7 +23,7 @@ The runner first calls `/beat`; if it is not successful it stops without calling
 For an executor protected by `XXL-JOB-ACCESS-TOKEN`, set the token through the user's secret-management flow, then pass only the environment-variable name:
 
 ```bash
-python3 /Users/liuwenyuan/www/tools/skills-xxljob-executor/scripts/run_xxl_job.py \
+python3 scripts/run_xxl_job.py \
   --executor-url "https://executor.example.com" \
   --handler "exampleHandler" \
   --params '{"key":"value"}' \
