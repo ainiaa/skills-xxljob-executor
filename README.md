@@ -2,7 +2,7 @@
 
 面向 Codex 的本地 Skill：直接调用 XXL-Job Executor 的 HTTP 接口触发已注册的 Handler，并回读该次执行日志。
 
-当前发布版本：[0.1.0](VERSION)。未发布改动见 [变更日志](CHANGELOG.md) 的 Unreleased。
+当前发布版本：[0.1.1](VERSION)。未发布改动见 [变更日志](CHANGELOG.md) 的 Unreleased。
 
 ## 快速开始
 
