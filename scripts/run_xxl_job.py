@@ -24,7 +24,7 @@ class NoRedirectHandler(HTTPRedirectHandler):
 
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--executor-url", required=True, help="Executor base URL, for example http://10.93.1.143:9999")
+    parser.add_argument("--executor-url", required=True, help="Executor base URL, for example https://executor.example.com")
     parser.add_argument("--handler", required=True, help="XXL-Job executor handler name")
     parser.add_argument("--params", required=True, help="Handler JSON parameters")
     parser.add_argument("--job-id", type=int, help="Optional XXL-Job ID; defaults to a stable ID derived from the handler")

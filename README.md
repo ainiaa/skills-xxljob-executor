@@ -10,9 +10,9 @@
 
 ```bash
 python3 scripts/run_xxl_job.py \
-  --executor-url "http://10.93.1.143:9999" \
-  --handler "syncAegisTradeFlowHandler" \
-  --params '{"accountNos":["acct_x"],"startTime":1789344000000,"endTime":1789430400000}'
+  --executor-url "https://executor.example.com" \
+  --handler "exampleHandler" \
+  --params '{"key":"value"}'
 ```
 
 脚本依次请求 `/beat`、`/run` 与 `/log`：探活不成功时不会触发任务；触发后读取本次生成的 logId 的当前可用日志，不会自动重试。
@@ -48,32 +48,13 @@ python3 scripts/run_xxl_job.py \
 
 ## 使用 Skill
 
-显式使用 `$xxl-job-executor`，并给出执行器地址、Handler 和参数。例如：
+在 Codex 对话中显式使用 `$xxl-job-executor`，并提供执行器地址、Handler 和 JSON 参数：
 
 ```text
-使用 $xxl-job-executor 调用 http://10.93.1.143:9999/ 的 syncAegisTradeFlowHandler，参数为 {"accountNos":["acct_x"]}。
+使用 $xxl-job-executor 调用 https://executor.example.com 的 exampleHandler，参数为 {"key":"value"}。
 ```
 
-完整运行边界见 [SKILL.md](SKILL.md)。该 Skill 不用于修改 XXL-Job 管理台中的调度配置，也不会猜测凭据、改写参数或在失败后自行重试。
-
-要用 `$xxl-job-executor` 自动发现此 Skill，需要将本目录安装或软链接到 Codex 已配置的 skills 根目录；否则仍可直接执行本 README 中的脚本命令。
-
-## 验证
-
-```bash
-python3 -m unittest discover -s tests -v
-```
-
-测试使用本地模拟 Executor，覆盖正常触发、XXL-Job 日志语义、稳定或显式 jobId、token Header 透传与 HTTPS/重定向保护、token 错误回显保护、token 缺失时停止，以及 `/beat` 失败时停止且不调用 `/run`。
-
-覆盖率门禁为 90%（语句覆盖率）：
-
-```bash
-python3 -m coverage erase
-python3 -m coverage run -m unittest discover -s tests -v
-python3 -m coverage combine
-python3 -m coverage report -m
-```
+该 Skill 仅在用户明确要求执行时触发任务；不会修改 XXL-Job 管理台配置、猜测凭据或自动重试失败任务。
 
 ## 许可
 

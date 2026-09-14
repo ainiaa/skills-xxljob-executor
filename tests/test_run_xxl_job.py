@@ -89,7 +89,7 @@ class RunXxlJobTest(unittest.TestCase):
         self.redirect_thread.join()
         self.redirect_target.server_close()
 
-    def run_script(self, extra_args=None, environment=None, handler="syncAegisTradeFlowHandler"):
+    def run_script(self, extra_args=None, environment=None, handler="exampleHandler"):
         command = [
             sys.executable, str(SCRIPT),
             "--executor-url", self.executor_url,
@@ -121,7 +121,7 @@ class RunXxlJobTest(unittest.TestCase):
         self.assertIn("ReturnT [code=200]", result.stdout)
         self.assertEqual(["/beat", "/run", "/log"], [request["path"] for request in ExecutorHandler.requests])
         run_payload = ExecutorHandler.requests[1]["payload"]
-        self.assertEqual("syncAegisTradeFlowHandler", run_payload["executorHandler"])
+        self.assertEqual("exampleHandler", run_payload["executorHandler"])
         self.assertEqual({"accountNos": ["acct_1"], "startTime": 1, "endTime": 2},
                          json.loads(run_payload["executorParams"]))
 
@@ -142,10 +142,10 @@ class RunXxlJobTest(unittest.TestCase):
         self.assertEqual(9001, ExecutorHandler.requests[1]["payload"]["jobId"])
 
     def test_trims_handler_before_sending_to_executor(self):
-        result = self.run_script(handler="  syncAegisTradeFlowHandler  ")
+        result = self.run_script(handler="  exampleHandler  ")
 
         self.assertEqual(0, result.returncode, result.stderr)
-        self.assertEqual("syncAegisTradeFlowHandler", ExecutorHandler.requests[1]["payload"]["executorHandler"])
+        self.assertEqual("exampleHandler", ExecutorHandler.requests[1]["payload"]["executorHandler"])
 
     def test_creates_distinct_log_ids_when_clock_millisecond_is_the_same(self):
         with patch.object(RUNNER.time, "time", return_value=1789372800.123), \

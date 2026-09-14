@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- 移除公开文档和帮助文本中的内部执行器、Handler 与账号示例。
+
 ## [0.1.0] - 2026-09-14
 
 - 首次发布直接调用 XXL-Job Executor 的 Skill。
