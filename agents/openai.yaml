@@ -1,0 +1,3 @@
+interface:
+  display_name: "XXL-Job Executor"
+  short_description: "Trigger and inspect a direct XXL-Job executor run"
