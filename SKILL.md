@@ -1,6 +1,6 @@
 ---
 name: xxl-job-executor
-description: Use when given an XXL-Job executor address, JobHandler name, and JSON parameters, and asked to trigger the handler directly or inspect its direct execution log. Not for editing schedules in an XXL-Job admin console.
+description: Use when explicitly asked to trigger an XXL-Job handler through its executor API and optionally inspect the log from that same new run. The runner cannot inspect historical runs without triggering again; do not use it for that purpose. Not for editing schedules in an XXL-Job admin console.
 ---
 
 # XXL-Job Executor
@@ -9,7 +9,7 @@ Trigger a registered BEAN handler through the executor's HTTP API. The required 
 
 ## Run once
 
-An explicit user request to execute is required; composing a command or explaining parameters does not authorize a run.
+An explicit user request to execute is required; composing a command, explaining parameters, or asking why a previous run behaved a certain way does not authorize a new run. This runner always calls `/run` once and then reads the log for that new execution; it cannot fetch an earlier run's log by `logId`. Never run it just to inspect a historical execution. For a previous run, use read-only application logs or an existing user-provided execution log/record with its log content. If those are unavailable, explain the limitation and ask the user to provide the historical log content or a read-only execution record that contains it; a bare `logId` is insufficient. Never rerun the handler as a substitute.
 
 ```bash
 python3 scripts/run_xxl_job.py \

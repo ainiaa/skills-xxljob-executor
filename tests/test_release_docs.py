@@ -29,8 +29,8 @@ class ReleaseDocsTest(unittest.TestCase):
         readme = (ROOT / "README.md").read_text()
         changelog = (ROOT / "CHANGELOG.md").read_text()
 
-        self.assertEqual("0.1.1", version)
-        self.assertIn("当前发布版本：[0.1.1](VERSION)", readme)
+        self.assertEqual("0.1.2", version)
+        self.assertIn("当前发布版本：[0.1.2](VERSION)", readme)
         self.assertIn("[变更日志](CHANGELOG.md)", readme)
         self.assertIn("## 快速开始", readme)
         self.assertIn("scripts/run_xxl_job.py", readme)

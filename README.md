@@ -2,7 +2,7 @@
 
 面向 Codex 的本地 Skill：直接调用 XXL-Job Executor 的 HTTP 接口触发已注册的 Handler，并回读该次执行日志。
 
-当前发布版本：[0.1.1](VERSION)。未发布改动见 [变更日志](CHANGELOG.md) 的 Unreleased。
+当前发布版本：[0.1.2](VERSION)。未发布改动见 [变更日志](CHANGELOG.md) 的 Unreleased。
 
 ## 快速开始
 
@@ -16,6 +16,8 @@ python3 scripts/run_xxl_job.py \
 ```
 
 脚本依次请求 `/beat`、`/run` 与 `/log`：探活不成功时不会触发任务；触发后读取本次生成的 logId 的当前可用日志，不会自动重试。
+
+脚本始终会触发一次新运行，不能用来读取历史运行的日志，也不能仅凭旧 `logId` 查询。排查既有运行时，请使用应用服务日志或用户提供的历史执行记录及其日志内容；如果只有 `logId`，需要先取得历史日志或只读执行记录，不能为了查看日志重新触发 Handler。
 
 ### 带 access token 的 Executor
 
